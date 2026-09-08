@@ -1,0 +1,24 @@
+Java files:
+------------
+1. RateLimiter.java      - requirement Rate Limiter Interface
+2. SlidingWindowLog.java - do for algorithm 1: Sliding Window Log algorithm
+3. TokenBucket.java      - do for algorithm 2: Token Bucket (incomplete, todo...)
+4. Testrun.java          - used to test for algorithm 1 & 2 by change the required values
+
+Note:
+-----
+1. Comparison trade-offs between algorithm 1 & 2
+   My comment:
+   - based on what I can think out, first in terms of I/O, algorithm 1 will consume more memory due to it stored requests by timestamp
+     compared to algorithm 2, which stored requests by tokens.
+   - secondly, in terms of complicated, algorithm 1 will be more simple code, straight forward, and easy to handle,
+     compared to algorithm 2, more complex, require more handling, and configured tokens count set.
+
+2. Make this work across multiple servers
+   - this was in-memory application which only work in one server
+   - to make it work across multiple servers, one of the way that I can think out is using NoSQL Redis.
+   - Redis as data store to store key and value, running same application in multiple servers, but checking with only one same Redis.
+   - Redis used as a cache and session, e.g. userA total limit in server 1 = 15, total limit in server 2 = 25, total userA limit = 15 + 25 = 40
+   - Redis also controllable like can set the expiration.
+   - Using only one of RDBMS by store key and value also workable, but it consumes high I/O compare to NOSQL,
+     Java threads may end up waiting for database connections or query results, which high chances to cause application server performance slow
